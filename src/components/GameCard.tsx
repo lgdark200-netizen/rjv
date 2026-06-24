@@ -256,7 +256,7 @@ export function GameCard({
           
           {/* Quick status button bars */}
           <div className="w-full mt-4">
-            <div className="flex flex-row items-center gap-1.5 w-full">
+            <div className="grid grid-cols-4 gap-2 w-full">
               
               {/* Bouton En Cours */}
               <button 
