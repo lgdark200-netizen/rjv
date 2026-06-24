@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.5
  */
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Game, PlayStatus, UserTrackedGame } from './types';
 import { CURATED_GAMES, GENRES_LIST, PLATFORMS_LIST } from './data';
 import { GameCard } from './components/GameCard';
@@ -143,14 +143,25 @@ export default function App() {
     });
   };
 
-  // Filtrage dynamique des jeux
-  const filteredGames = gamesList.filter(game => {
-    const matchesSearch = game.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                          game.developer.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesGenre = selectedGenre === 'Tous' || game.genres?.includes(selectedGenre);
-    const matchesPlatform = selectedPlatform === 'Toutes' || game.platforms?.includes(selectedPlatform);
-    return matchesSearch && matchesGenre && matchesPlatform;
-  });
+  // 1. Filtrage et 2. Tri dynamique par ordre alphabétique (via useMemo)
+  const filteredAndSortedGames = useMemo(() => {
+    // Étape A : On applique vos filtres
+    const filtered = gamesList.filter(game => {
+      const matchesSearch = game.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                            game.developer.toLowerCase().includes(searchQuery.toLowerCase());
+      const matchesGenre = selectedGenre === 'Tous' || game.genres?.includes(selectedGenre);
+      const matchesPlatform = selectedPlatform === 'Toutes' || game.platforms?.includes(selectedPlatform);
+      return matchesSearch && matchesGenre && matchesPlatform;
+    });
+
+    // Étape B : On trie le résultat par ordre alphabétique
+    return filtered.sort((a, b) => {
+      const titleA = a.title || "";
+      const titleB = b.title || "";
+      // localeCompare gère nativement les accents et la casse
+      return titleA.localeCompare(titleB);
+    });
+  }, [gamesList, searchQuery, selectedGenre, selectedPlatform]);
 
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100 font-sans selection:bg-cyber-green selection:text-black">
@@ -252,9 +263,9 @@ export default function App() {
 
         {/* AFFICHAGE DES JEUX */}
         <section>
-          {filteredGames.length > 0 ? (
+          {filteredAndSortedGames.length > 0 ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-              {filteredGames.map((game) => (
+              {filteredAndSortedGames.map((game) => (
                 <GameCard 
                   key={game.id} 
                   game={game}
