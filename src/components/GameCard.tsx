@@ -256,66 +256,67 @@ export function GameCard({
           
           {/* Quick status button bars */}
           <div className="w-full mt-4">
+            {/* Changement ici : Remplacement de flex par un grid à 4 colonnes strictement égales */}
             <div className="grid grid-cols-4 gap-2 w-full">
               
               {/* Bouton En Cours */}
               <button 
                 onClick={(e) => { e.stopPropagation(); onStatusChange(game.id, 'en_cours'); }}
                 type="button"
-                className={`flex-1 flex flex-col items-center justify-center h-16 p-1 rounded-xl bg-black/40 border transition-all text-[10px] font-mono leading-none active:scale-95 cursor-pointer ${
+                className={`w-full flex flex-col items-center justify-center h-16 p-1 rounded-xl bg-black/40 border transition-all text-[10px] font-mono leading-none active:scale-95 cursor-pointer ${
                   trackedState?.status === 'en_cours'
                     ? 'border-cyber-amber text-cyber-amber shadow-[0_0_10px_rgba(255,179,0,0.2)]'
                     : 'border-cyber-darkgreen/40 hover:border-cyber-green text-slate-200 hover:text-cyber-green'
                 }`}
               >
-                <Flame className={`w-3.5 h-3.5 mb-1 ${trackedState?.status === 'en_cours' ? 'animate-pulse' : ''}`} />
-                <span className="text-center block truncate w-full tracking-tighter">En Cours</span>
+                <Flame className={`w-3.5 h-3.5 mb-1 shrink-0 ${trackedState?.status === 'en_cours' ? 'animate-pulse' : ''}`} />
+                <span className="text-center block truncate w-full tracking-tighter px-0.5">En Cours</span>
               </button>
 
               {/* Bouton À Jouer */}
               <button 
                 onClick={(e) => { e.stopPropagation(); onStatusChange(game.id, 'backlog'); }}
                 type="button"
-                className={`flex-1 flex flex-col items-center justify-center h-16 p-1 rounded-xl bg-black/40 border transition-all text-[10px] font-mono leading-none active:scale-95 cursor-pointer ${
+                className={`w-full flex flex-col items-center justify-center h-16 p-1 rounded-xl bg-black/40 border transition-all text-[10px] font-mono leading-none active:scale-95 cursor-pointer ${
                   trackedState?.status === 'backlog'
                     ? 'border-cyber-amber text-cyber-amber shadow-[0_0_10px_rgba(255,179,0,0.2)]'
                     : 'border-cyber-darkgreen/40 hover:border-cyber-green text-slate-200 hover:text-cyber-green'
                 }`}
               >
-                <Clock className={`w-3.5 h-3.5 mb-1 ${trackedState?.status === 'backlog' ? 'animate-pulse' : ''}`} />
-                <span className="text-center block truncate w-full tracking-tighter">À Jouer</span>
+                <Clock className={`w-3.5 h-3.5 mb-1 shrink-0 ${trackedState?.status === 'backlog' ? 'animate-pulse' : ''}`} />
+                <span className="text-center block truncate w-full tracking-tighter px-0.5">À Jouer</span>
               </button>
 
               {/* Bouton Terminé */}
               <button 
                 onClick={(e) => { e.stopPropagation(); onStatusChange(game.id, 'termine'); }}
                 type="button"
-                className={`flex-1 flex flex-col items-center justify-center h-16 p-1 rounded-xl bg-black/40 border transition-all text-[10px] font-mono leading-none active:scale-95 cursor-pointer ${
+                className={`w-full flex flex-col items-center justify-center h-16 p-1 rounded-xl bg-black/40 border transition-all text-[10px] font-mono leading-none active:scale-95 cursor-pointer ${
                   trackedState?.status === 'termine'
                     ? 'border-cyber-green text-cyber-green shadow-[0_0_10px_rgba(0,255,102,0.2)]'
                     : 'border-cyber-darkgreen/40 hover:border-cyber-green text-slate-200 hover:text-cyber-green'
                 }`}
               >
-                <CheckCircle className="w-3.5 h-3.5 mb-1" />
-                <span className="text-center block truncate w-full tracking-tighter">Terminé</span>
+                <CheckCircle className="w-3.5 h-3.5 mb-1 shrink-0" />
+                <span className="text-center block truncate w-full tracking-tighter px-0.5">Terminé</span>
               </button>
 
               {/* Bouton Envie */}
               <button 
                 onClick={(e) => { e.stopPropagation(); onStatusChange(game.id, 'envie_de_jouer'); }}
                 type="button"
-                className={`flex-1 flex flex-col items-center justify-center h-16 p-1 rounded-xl bg-black/40 border transition-all text-[10px] font-mono leading-none active:scale-95 cursor-pointer ${
+                className={`w-full flex flex-col items-center justify-center h-16 p-1 rounded-xl bg-black/40 border transition-all text-[10px] font-mono leading-none active:scale-95 cursor-pointer ${
                   trackedState?.status === 'envie_de_jouer'
                     ? 'border-purple-500 text-purple-400 shadow-[0_0_10px_rgba(168,85,247,0.2)]'
                     : 'border-cyber-darkgreen/40 hover:border-cyber-green text-slate-200 hover:text-cyber-green'
                 }`}
               >
-                <Heart className="w-3.5 h-3.5 mb-1" />
-                <span className="text-center block truncate w-full tracking-tighter">Envie</span>
+                <Heart className="w-3.5 h-3.5 mb-1 shrink-0" />
+                <span className="text-center block truncate w-full tracking-tighter px-0.5">Envie</span>
               </button>
 
             </div>
-          </div>
+</div>
           
           {/* Bouton de consultation des détails */}
           <button
