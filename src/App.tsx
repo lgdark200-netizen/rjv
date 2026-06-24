@@ -143,22 +143,35 @@ export default function App() {
     });
   };
 
-  // 1. Filtrage et 2. Tri dynamique par ordre alphabétique (via useMemo)
+  // MODIFICATION ICI : Filtrage ultra-sécurisé gérant le singulier (modèle JSON) et le pluriel (Steam)
   const filteredAndSortedGames = useMemo(() => {
-    // Étape A : On applique vos filtres
     const filtered = gamesList.filter(game => {
-      const matchesSearch = game.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                            game.developer.toLowerCase().includes(searchQuery.toLowerCase());
-      const matchesGenre = selectedGenre === 'Tous' || game.genres?.includes(selectedGenre);
-      const matchesPlatform = selectedPlatform === 'Toutes' || game.platforms?.includes(selectedPlatform);
+      // 1. Recherche par texte sécurisée (évite le crash si developer n'existe pas)
+      const title = game.title || "";
+      const developer = game.developer || "";
+      const matchesSearch = title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                            developer.toLowerCase().includes(searchQuery.toLowerCase());
+
+      // 2. Filtrage Genre : Accepte 'genres' (tableau) OU 'genre' (chaîne de caractères)
+      // @ts-ignore
+      const gameGenres: string[] = game.genres || (game.genre ? [game.genre] : []);
+      const matchesGenre = selectedGenre === 'Tous' || gameGenres.includes(selectedGenre);
+
+      // 3. Filtrage Plateforme : Accepte 'platforms' (tableau) OU 'platform' (chaîne de caractères)
+      // @ts-ignore
+      const gamePlatforms: string[] = game.platforms || (game.platform ? game.platform.split(' / ') : []);
+      const matchesPlatform = selectedPlatform === 'Toutes' || gamePlatforms.some(p => 
+        p.trim().toLowerCase().includes(selectedPlatform.toLowerCase()) || 
+        selectedPlatform.toLowerCase().includes(p.trim().toLowerCase())
+      );
+
       return matchesSearch && matchesGenre && matchesPlatform;
     });
 
-    // Étape B : On trie le résultat par ordre alphabétique
+    // 4. Tri par ordre alphabétique
     return filtered.sort((a, b) => {
       const titleA = a.title || "";
       const titleB = b.title || "";
-      // localeCompare gère nativement les accents et la casse
       return titleA.localeCompare(titleB);
     });
   }, [gamesList, searchQuery, selectedGenre, selectedPlatform]);

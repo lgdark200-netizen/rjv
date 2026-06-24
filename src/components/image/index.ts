@@ -57,9 +57,26 @@ import cyberpunk from './cyberpunk.jpg';
 import zeldaBotw from './zelda botw.jpg';
 import theWitcher3 from './the witcher 3.jpg';
 import eldenRing from './elden ring.jpg';
+import allanwake from './allan-wake.jpg';
+import ittakestwo from './it-takes-two.jpg';
+import jedisurvivor from './jedi-survivor.jpg';
+import quakeenhanced from './quake-enhanced.jpg';
+import vampiresurvivors from './vampire-survivors.jpg';
+import xcom2 from './xcom-2.jpg';
+import yakuzalikeadragon from './yakuza-like-a-dragon.jpg';
+import zeldatotk from './zelda-totk.jpg';
+import { X } from 'lucide-react';
 
 // L'objet de correspondance (Map)
 export const images: { [key: string]: string } = {
+  'alan-wake-2': allanwake,
+  'it-takes-two': ittakestwo,
+  'jedi-survivor':jedisurvivor,
+  'quake':quakeenhanced,
+  'vampire-survivors': vampiresurvivors,
+  'xcom-2': xcom2,
+  'yakuza-like-a-dragon': yakuzalikeadragon,
+  'zelda-totk': zeldatotk,
   'nine-sols': nineSols,
   'sifu': sifu,
   'katana-zero': katanaZero,
